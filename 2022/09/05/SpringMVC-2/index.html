@@ -1,0 +1,211 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SpringMVC(2) | LemmingX's Blog</title><meta name="keywords" content="Java学习"><meta name="author" content="LemmingX"><meta name="copyright" content="LemmingX"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="SpringMVC JSON背景 现在的主流开发几乎都是前后端分离的 后端部署后端，提供接口，提供数据 前端部署前端，负责渲染后端的数据  🤨问题来了:前后端是通过什么样的方式连接起来的呢？   😎在我的设想里，后端是不是通过一种接口，前端接收一种接口的方式传递数据，但是既然如此的话，是不是一万个前端页面就需要一万个传递的接口？有没有一种统一的方式来接收后端的数据呢？  于是前后端约定，数据交">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC(2)">
+<meta property="og:url" content="https://flying-li.github.io/2022/09/05/SpringMVC-2/index.html">
+<meta property="og:site_name" content="LemmingX&#39;s Blog">
+<meta property="og:description" content="SpringMVC JSON背景 现在的主流开发几乎都是前后端分离的 后端部署后端，提供接口，提供数据 前端部署前端，负责渲染后端的数据  🤨问题来了:前后端是通过什么样的方式连接起来的呢？   😎在我的设想里，后端是不是通过一种接口，前端接收一种接口的方式传递数据，但是既然如此的话，是不是一万个前端页面就需要一万个传递的接口？有没有一种统一的方式来接收后端的数据呢？  于是前后端约定，数据交">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-09-05T02:22:02.000Z">
+<meta property="article:modified_time" content="2022-09-05T02:22:47.089Z">
+<meta property="article:author" content="LemmingX">
+<meta property="article:tag" content="Java学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://flying-li.github.io/2022/09/05/SpringMVC-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-09-05 10:22:47'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avater_img.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/talk/"><i class="fa-fw fas fa-cubes"></i><span> 说说</span></a></li><li><a class="site-page child" href="/image/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LemmingX's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/talk/"><i class="fa-fw fas fa-cubes"></i><span> 说说</span></a></li><li><a class="site-page child" href="/image/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SpringMVC(2)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-09-05T02:22:02.000Z" title="发表于 2022-09-05 10:22:02">2022-09-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-09-05T02:22:47.089Z" title="更新于 2022-09-05 10:22:47">2022-09-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Java/">Java</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="SpringMVC(2)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="SpringMVC"><a href="#SpringMVC" class="headerlink" title="SpringMVC"></a>SpringMVC</h1><hr>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h2><p><strong>背景</strong></p>
+<p>现在的主流开发几乎都是前后端分离的</p>
+<p>后端部署后端，提供接口，提供数据</p>
+<p>前端部署前端，负责渲染后端的数据</p>
+<blockquote>
+<p>🤨问题来了:前后端是通过什么样的方式连接起来的呢？</p>
+</blockquote>
+<blockquote>
+<p>😎在我的设想里，后端是不是通过一种接口，前端接收一种接口的方式传递数据，但是既然如此的话，是不是一万个前端页面就需要一万个传递的接口？有没有一种统一的方式来接收后端的数据呢？</p>
+</blockquote>
+<p>于是前后端约定，数据交换的格式按照一种特殊的格式传递，后端把数据整理成一种格式，前端接收这种专门的格式，就可以同意了吧</p>
+<p>JSON就是这样的一种格式</p>
+<hr>
+<h2 id="什么是JSON"><a href="#什么是JSON" class="headerlink" title="什么是JSON"></a>什么是JSON</h2><ul>
+<li>JSON是一种轻量级的数据交换格式</li>
+<li>它采用完全独立编程语言的文本格式来存储数据</li>
+<li>简洁和清晰的层次结构使得JSON成为李翔的数据交换语言</li>
+</ul>
+<p>JSON键值对是用来保存JavaScript对象的一种方式，和JavasScript对象的写法也大同小异</p>
+<hr>
+<h2 id="Controller返回JSON数据"><a href="#Controller返回JSON数据" class="headerlink" title="Controller返回JSON数据"></a>Controller返回JSON数据</h2><blockquote>
+<p>💻💻这里使用了一个JackSon的依赖</p>
+</blockquote>
+<p>首先：导包</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其次：编辑web.xml</p>
+<p>在者：写springmvc-servlet.xml</p>
+<p>然后：写个User实体类（Lombok）</p>
+<p><strong>传统方式给前端传个对象</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/j1&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span><span class="comment">//让这个Controller不去走视图解析器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">json1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>,<span class="string">&quot;Lemming&quot;</span>,<span class="number">18</span>);</span><br><span class="line">        <span class="keyword">return</span> user.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出<code>User(id=1, name=Lemming, age=18)</code></p>
+<p><strong>用jackson给前端传递个对象</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/j1&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span><span class="comment">//让这个Controller不去走视图解析器</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">json1</span><span class="params">()</span></span>&#123;</span><br><span class="line">        ObjectMapper objectMapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line">        User user = <span class="keyword">new</span> User(<span class="number">1</span>,<span class="string">&quot;Lemming&quot;</span>,<span class="number">18</span>);</span><br><span class="line">        String s = objectMapper.writeValueAsString(user);</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出<code>&#123;&quot;id&quot;:1,&quot;name&quot;:&quot;Lemming&quot;,&quot;age&quot;:18&#125;</code></p>
+<hr>
+<h3 id="题外话，JSON乱码"><a href="#题外话，JSON乱码" class="headerlink" title="题外话，JSON乱码"></a>题外话，JSON乱码</h3><p>我们可以通过SpringMVC的统一配置来解决乱码问题</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- JSON乱码问题配置 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">mvc:message-converters</span> <span class="attr">register-defaults</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">value</span>=<span class="string">&quot;UTF-8&quot;</span>/&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;objectMapper&quot;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean&quot;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;failOnEmptyBeans&quot;</span> <span class="attr">value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">mvc:message-converters</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">mvc:annotation-driven</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="FastJson"><a href="#FastJson" class="headerlink" title="FastJson"></a>FastJson</h2><blockquote>
+<p>🤨🤨什么是FastJson？</p>
+</blockquote>
+<p>FastJson是阿里开发的专门用于Java开发的包，可以方便的实现json对象与JavaBean对象的转换，实现JavaBean对象与Json字符串的转换，实现json对象与json字符串的转换</p>
+<h3 id="使用FastJson"><a href="#使用FastJson" class="headerlink" title="使用FastJson"></a>使用FastJson</h3><p>FastJson内存在的对象</p>
+<ul>
+<li></li>
+</ul>
+<ol>
+<li><p>导入依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.60<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>使用JSON对象</p>
+</li>
+</ol>
+<hr>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LemmingX</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://flying-li.github.io/2022/09/05/SpringMVC-2/">https://flying-li.github.io/2022/09/05/SpringMVC-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://flying-li.github.io" target="_blank">LemmingX's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java%E5%AD%A6%E4%B9%A0/">Java学习</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/09/05/SpringBoot/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SpringBoot</div></div></a></div><div class="next-post pull-right"><a href="/2022/09/05/SpringMVC-1/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">SpringMVC(1)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/09/05/IO流/" title="IO流の力——狂乱の出力と入力，ファイルの絶叫！！"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-05</div><div class="title">IO流の力——狂乱の出力と入力，ファイルの絶叫！！</div></div></a></div><div><a href="/2022/09/05/SSM整合/" title="SSM整合"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-05</div><div class="title">SSM整合</div></div></a></div><div><a href="/2022/09/05/SpringBoot/" title="SpringBoot"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-05</div><div class="title">SpringBoot</div></div></a></div><div><a href="/2022/09/05/SpringMVC-1/" title="SpringMVC(1)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-05</div><div class="title">SpringMVC(1)</div></div></a></div><div><a href="/2022/09/05/多线程/" title="多线程きそ——学んだからといって必ずしも役に立つとは限らない！！！"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-05</div><div class="title">多线程きそ——学んだからといって必ずしも役に立つとは限らない！！！</div></div></a></div><div><a href="/2022/09/05/反射/" title="反射"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-09-05</div><div class="title">反射</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avater_img.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LemmingX</div><div class="author-info__description">一个笨蛋罢了</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringMVC"><span class="toc-number">1.</span> <span class="toc-text">SpringMVC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JSON"><span class="toc-number">1.1.</span> <span class="toc-text">JSON</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFJSON"><span class="toc-number">1.2.</span> <span class="toc-text">什么是JSON</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Controller%E8%BF%94%E5%9B%9EJSON%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.</span> <span class="toc-text">Controller返回JSON数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%98%E5%A4%96%E8%AF%9D%EF%BC%8CJSON%E4%B9%B1%E7%A0%81"><span class="toc-number">1.3.1.</span> <span class="toc-text">题外话，JSON乱码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FastJson"><span class="toc-number">1.4.</span> <span class="toc-text">FastJson</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8FastJson"><span class="toc-number">1.4.1.</span> <span class="toc-text">使用FastJson</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/%E5%8F%8D%E5%B0%84/" title="反射"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="反射"/></a><div class="content"><a class="title" href="/2022/09/05/%E5%8F%8D%E5%B0%84/" title="反射">反射</a><time datetime="2022-09-05T02:24:09.000Z" title="发表于 2022-09-05 10:24:09">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SpringBoot/" title="SpringBoot"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringBoot"/></a><div class="content"><a class="title" href="/2022/09/05/SpringBoot/" title="SpringBoot">SpringBoot</a><time datetime="2022-09-05T02:23:13.000Z" title="发表于 2022-09-05 10:23:13">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SpringMVC-2/" title="SpringMVC(2)"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC(2)"/></a><div class="content"><a class="title" href="/2022/09/05/SpringMVC-2/" title="SpringMVC(2)">SpringMVC(2)</a><time datetime="2022-09-05T02:22:02.000Z" title="发表于 2022-09-05 10:22:02">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SpringMVC-1/" title="SpringMVC(1)"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC(1)"/></a><div class="content"><a class="title" href="/2022/09/05/SpringMVC-1/" title="SpringMVC(1)">SpringMVC(1)</a><time datetime="2022-09-05T02:20:32.000Z" title="发表于 2022-09-05 10:20:32">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SSM%E6%95%B4%E5%90%88/" title="SSM整合"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SSM整合"/></a><div class="content"><a class="title" href="/2022/09/05/SSM%E6%95%B4%E5%90%88/" title="SSM整合">SSM整合</a><time datetime="2022-09-05T02:19:32.000Z" title="发表于 2022-09-05 10:19:32">2022-09-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By LemmingX</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="爱国,敬业,诚信,友善" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

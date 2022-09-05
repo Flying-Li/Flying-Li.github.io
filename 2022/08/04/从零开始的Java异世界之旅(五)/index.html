@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>从零开始的Java异世界之旅(五） | LemmingX's Blog</title><meta name="keywords" content="Java,JavaSE"><meta name="author" content="LemmingX"><meta name="copyright" content="LemmingX"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从零开始的Java异世界之旅（五）   第十二章  包装类 String StringBuffer StringBuilder Math Date、Calender、LocalDate System Arrays BigInteger BigDecimal  —-一、包装类包装类是什么？ 根据八种基本数据类型相应的引用类型–包装类（类的对象） 有了类的特点，我们就可以去调用类的方法 包装类有什么用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从零开始的Java异世界之旅(五）">
+<meta property="og:url" content="https://flying-li.github.io/2022/08/04/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Java%E5%BC%82%E4%B8%96%E7%95%8C%E4%B9%8B%E6%97%85(%E4%BA%94)/index.html">
+<meta property="og:site_name" content="LemmingX&#39;s Blog">
+<meta property="og:description" content="从零开始的Java异世界之旅（五）   第十二章  包装类 String StringBuffer StringBuilder Math Date、Calender、LocalDate System Arrays BigInteger BigDecimal  —-一、包装类包装类是什么？ 根据八种基本数据类型相应的引用类型–包装类（类的对象） 有了类的特点，我们就可以去调用类的方法 包装类有什么用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-08-04T13:56:55.000Z">
+<meta property="article:modified_time" content="2022-08-29T05:27:15.114Z">
+<meta property="article:author" content="LemmingX">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JavaSE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://flying-li.github.io/2022/08/04/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Java%E5%BC%82%E4%B8%96%E7%95%8C%E4%B9%8B%E6%97%85(%E4%BA%94)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = { 
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-29 13:27:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="/img/avater_img.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/talk/"><i class="fa-fw fas fa-cubes"></i><span> 说说</span></a></li><li><a class="site-page child" href="/image/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">LemmingX's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/talk/"><i class="fa-fw fas fa-cubes"></i><span> 说说</span></a></li><li><a class="site-page child" href="/image/"><i class="fa-fw fas fa-images"></i><span> 相册</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">从零开始的Java异世界之旅(五）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-08-04T13:56:55.000Z" title="发表于 2022-08-04 21:56:55">2022-08-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-08-29T05:27:15.114Z" title="更新于 2022-08-29 13:27:15">2022-08-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JavaSE%E5%9F%BA%E7%A1%80/">JavaSE基础</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="从零开始的Java异世界之旅(五）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><div align = 'center'><font size='5'>从零开始的Java异世界之旅（五）</font></div>
+
+<hr>
+<h2 id="第十二章"><a href="#第十二章" class="headerlink" title="第十二章"></a>第十二章</h2><hr>
+<ul>
+<li>包装类</li>
+<li>String</li>
+<li>StringBuffer</li>
+<li>StringBuilder</li>
+<li>Math</li>
+<li>Date、Calender、LocalDate</li>
+<li>System</li>
+<li>Arrays</li>
+<li>BigInteger BigDecimal</li>
+</ul>
+<h3 id="—"><a href="#—" class="headerlink" title="—-"></a>—-</h3><h2 id="一、包装类"><a href="#一、包装类" class="headerlink" title="一、包装类"></a>一、包装类</h2><p><strong>包装类是什么？</strong></p>
+<p>根据八种基本数据类型相应的引用类型–包装类（类的对象）</p>
+<p>有了类的特点，我们就可以去调用类的方法</p>
+<p><strong>包装类有什么用？</strong></p>
+<p><strong>包装类和基本数据类型的转换</strong>？</p>
+<p>| 自动装箱在底层调用的是ValueOf方法，比如Integer.valueOf() |</p>
+<p>//演示手动装箱</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n1 = <span class="number">100</span>;</span><br><span class="line">Integer integer = <span class="keyword">new</span> Integer(n1);</span><br><span class="line">Integer integer1 = Integer.valueOf(n1);</span><br></pre></td></tr></table></figure>
+
+<p>//手动拆箱</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = integer.intValue();</span><br></pre></td></tr></table></figure>
+
+<p>//自动装箱</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n2 = <span class="number">200</span>;</span><br><span class="line">Integer integer = n2;</span><br></pre></td></tr></table></figure>
+
+<p>//自动拆箱</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> n3 = integer2;</span><br></pre></td></tr></table></figure>
+
+<p>| 包装类的内容是详解我们在调用int n = 1 时底层代码调用了什么内容 |</p>
+<h3 id="二、包装类的各种转换"><a href="#二、包装类的各种转换" class="headerlink" title="二、包装类的各种转换"></a>二、包装类的各种转换</h3><p>int &gt;&gt; String</p>
+<p><code>int n = 100;    String i = n.toString();</code></p>
+<p>String &gt;&gt; int </p>
+<p><code>String str = 100;    int n = Integer.paraseInt(str);</code></p>
+<h3 id="三、包装类常用方法"><a href="#三、包装类常用方法" class="headerlink" title="三、包装类常用方法"></a>三、包装类常用方法</h3><p>Integer Character</p>
+<p>可以去IDEA内查看类图查看类内相关方法</p>
+<h2 id="二、String"><a href="#二、String" class="headerlink" title="二、String"></a>二、String</h2><p>结构：</p>
+<p>String是Object的子类，它实现了Serializable、Comparable、CharSequence</p>
+<p>| 实现了Serializable接口，那就意味着这个对象是可以串行化的，也就是说该对象 |</p>
+<p>| 可以实现网络传输 | |实现了Comparable接口就可以比较String对象 | </p>
+<ul>
+<li>String是一个final类</li>
+<li>String最重要的一点是它的value，字符串有一个属性private finla char value[ ]也就是说，String本质上还是char</li>
+<li>注意private final char value[ ]的final指的不是数值的不可修改，而是value在指向一个地址之后，不可以再指向一个新的地址。其中地址空间内的单个数值是可以改变的</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">LemmingX</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://flying-li.github.io/2022/08/04/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Java%E5%BC%82%E4%B8%96%E7%95%8C%E4%B9%8B%E6%97%85(%E4%BA%94)/">https://flying-li.github.io/2022/08/04/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Java%E5%BC%82%E4%B8%96%E7%95%8C%E4%B9%8B%E6%97%85(%E4%BA%94)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://flying-li.github.io" target="_blank">LemmingX's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/JavaSE/">JavaSE</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/08/05/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Java%E5%BC%82%E4%B8%96%E7%95%8C%E4%B9%8B%E6%97%85-%E6%A1%86%E6%9E%B6Mybatis/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">从零开始的Java异世界之旅-框架</div></div></a></div><div class="next-post pull-right"><a href="/2022/08/04/%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E7%9A%84Java%E5%BC%82%E4%B8%96%E7%95%8C%E4%B9%8B%E6%97%85(%E5%9B%9B)/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">从零开始的Java异世界之旅(四)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/08/04/从零开始的Java异世界之旅(一)/" title="从零开始的Java异世界之旅(一)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-04</div><div class="title">从零开始的Java异世界之旅(一)</div></div></a></div><div><a href="/2022/08/04/从零开始的Java异世界之旅(二)/" title="从零开始的Java异世界之旅(二)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-04</div><div class="title">从零开始的Java异世界之旅(二)</div></div></a></div><div><a href="/2022/08/04/从零开始的Java异世界之旅(三)/" title="从零开始的Java异世界之旅(三)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-04</div><div class="title">从零开始的Java异世界之旅(三)</div></div></a></div><div><a href="/2022/08/04/从零开始的Java异世界之旅(四)/" title="从零开始的Java异世界之旅(四)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-04</div><div class="title">从零开始的Java异世界之旅(四)</div></div></a></div><div><a href="/2022/08/05/从零开始的Java异世界之旅-框架Mybatis/" title="从零开始的Java异世界之旅-框架"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-08-05</div><div class="title">从零开始的Java异世界之旅-框架</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="/img/avater_img.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">LemmingX</div><div class="author-info__description">一个笨蛋罢了</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">20</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">6</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0"><span class="toc-number">1.</span> <span class="toc-text">第十二章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%94"><span class="toc-number">1.1.</span> <span class="toc-text">—-</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB"><span class="toc-number">2.</span> <span class="toc-text">一、包装类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E7%9A%84%E5%90%84%E7%A7%8D%E8%BD%AC%E6%8D%A2"><span class="toc-number">2.1.</span> <span class="toc-text">二、包装类的各种转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%8C%85%E8%A3%85%E7%B1%BB%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">三、包装类常用方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81String"><span class="toc-number">3.</span> <span class="toc-text">二、String</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/%E5%8F%8D%E5%B0%84/" title="反射"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="反射"/></a><div class="content"><a class="title" href="/2022/09/05/%E5%8F%8D%E5%B0%84/" title="反射">反射</a><time datetime="2022-09-05T02:24:09.000Z" title="发表于 2022-09-05 10:24:09">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SpringBoot/" title="SpringBoot"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringBoot"/></a><div class="content"><a class="title" href="/2022/09/05/SpringBoot/" title="SpringBoot">SpringBoot</a><time datetime="2022-09-05T02:23:13.000Z" title="发表于 2022-09-05 10:23:13">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SpringMVC-2/" title="SpringMVC(2)"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC(2)"/></a><div class="content"><a class="title" href="/2022/09/05/SpringMVC-2/" title="SpringMVC(2)">SpringMVC(2)</a><time datetime="2022-09-05T02:22:02.000Z" title="发表于 2022-09-05 10:22:02">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SpringMVC-1/" title="SpringMVC(1)"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC(1)"/></a><div class="content"><a class="title" href="/2022/09/05/SpringMVC-1/" title="SpringMVC(1)">SpringMVC(1)</a><time datetime="2022-09-05T02:20:32.000Z" title="发表于 2022-09-05 10:20:32">2022-09-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/09/05/SSM%E6%95%B4%E5%90%88/" title="SSM整合"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SSM整合"/></a><div class="content"><a class="title" href="/2022/09/05/SSM%E6%95%B4%E5%90%88/" title="SSM整合">SSM整合</a><time datetime="2022-09-05T02:19:32.000Z" title="发表于 2022-09-05 10:19:32">2022-09-05</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By LemmingX</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/click-show-text.min.js" data-mobile="false" data-text="爱国,敬业,诚信,友善" data-fontsize="15px" data-random="false" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
